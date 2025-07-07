@@ -23,7 +23,7 @@
 :root {
   --white: #FFFFFF;
   --black: #000000;
-  --navy-950: #303B59;
+  --navy-950: rgb(48, 59, 89);
   --navy-200: #CAC9FF;
   --navy-50: #ECF2FF;
   --blue-800: #1125D6;
@@ -45,9 +45,12 @@
   --text-preset-6-bold: normal 700 16px/130% 'Hanken Grotesk';
   --spacing-0: 0px;
   --spacing-100: 8px;
+  --spacing-150: 12px;
   --spacing-200: 16px;
   --spacing-300: 24px;
   --spacing-400: 32px;
+  --spacing-500: 40px;
+  --spacing-700: 56px;
   --spacing-1000: 80px;
 }
 
@@ -71,15 +74,217 @@ body {
 }
 
 .card {
+  width: 100%;
+  max-width: 736px;
   display: flex;
   flex-direction: row;
-  border: 1px solid red;
+  /* border: 1px solid red; */
+  background-color: var(--white);
+  border-radius: 32px;
 }
 
 .score-total {
-  background-color: var(--gradient2);
-  padding: 
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  max-width: 368px;
+  background: var(--gradient2);
+  padding: var(--spacing-500) var(--spacing-700); 
+  border-radius: 32px;
+}
+
+.score-total > * {
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.score-total .score-label {
+  font: var(--text-preset-4);
+  color: var(--navy-200);
+  margin: 0 auto var(--spacing-400) auto;
 }
 
 
+.score-total .score-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-700);
+  background: var(--gradient1 );
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  margin: 0 auto var(--spacing-400) auto;
+}
 
+.score-total .score-container .score {
+  font: var(--text-preset-1);
+  color: var(--white);
+}
+
+.score-total .score-container .total {
+  font: var(--text-preset-5);
+  color: var(--navy-200);
+}
+
+.score-total .rating {
+  font: var(--text-preset-3);
+  color: var(--white);
+  margin: 0 auto var(--spacing-200) auto;
+}
+
+.score-total .score-statement {
+  font: var(--text-preset-5);
+  color: var(--navy-200);
+  text-align: center;
+}
+
+.summary {
+  width: 50%;
+  max-width: 368px;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--spacing-400);
+  padding: var(--spacing-500) var(--spacing-500);
+  justify-content: space-between;
+}
+
+.summary .heading{
+  font: var(--text-preset-4);
+  text-align: left;
+}
+
+.summary .scores {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: var(--spacing-200);
+}
+
+.scores .score-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid red; */
+  padding: var(--spacing-150);
+  border-radius: 10px;
+  column-gap: var(--spacing-1000);
+  font: var(--text-preset-5);
+}
+
+.score-label {
+  display: flex;
+  column-gap: var(--spacing-200);
+}
+
+.scores .score-container .score {
+  display: flex;
+  column-gap: var(--spacing-100);
+}
+
+.scores .score-container .score .total {
+  color: var(--navy-950);
+  opacity: 0.5;
+}
+
+.reaction-score {
+  background-color: var(--red-50);
+}
+
+.reaction-score .score-label {
+  color: var(--red-400);
+}
+
+.memory-score {
+  background-color: var(--yellow-50);
+}
+
+.memory-score .score-label {
+  color: var(--yellow-400);
+}
+
+.verbal-score {
+  background-color: var(--green-50);
+}
+
+.verbal-score .score-label {
+  color: var(--green-400);
+}
+
+.visual-score {
+  background-color: var(--blue-50);
+}
+
+.visual-score .score-label {
+  color: var(--blue-400);
+}
+
+/* Defines the normal state of the button */
+.btn-continue {
+  position: relative; /* Helps create the floating gradient background layer (created using ::before element) */
+  background-color: var(--navy-950); /* Normal solid color */
+  color: var(--white);
+  font: var(--text-preset-5);
+  padding: var(--spacing-100) 0;
+  border-radius: 128px;
+  border: none;
+  overflow: hidden; /* Anything that exceeds button should be hidden */
+  cursor: pointer;
+}
+
+/* Creates an invisible layer of linear gradient below the button text*/ 
+.btn-continue::before {
+  content: ""; /* Required for all ::before elements. Since it is only a background layer in this case it is set to ""*/
+  position: absolute; /* Makes the element float. Necessary for creating the background layer*/
+  inset: 0; /* top, left, right, bottom all set to 0 */
+  background: var(--gradient2); /* The required gradient*/
+  z-index: 0; /* Required for layering below the text */
+  opacity: 0; /* Required for keeping the background gradient layer invisible */
+  transition: opacity 1s ease; /* Required for slow fade in animation */
+}
+
+/* Required for fading in the gradient background layer */
+/* When the button is hovered, set the opacity of its ::before element to 1 */
+/* .btn-continue::before:hover does not work because ::before, ::after elements do not react to mouse events*/
+.btn-continue:hover::before {
+  opacity: 1; 
+}
+
+/* Set the text of the btn floating above the background layer */
+.btn-continue span {
+  position: relative; /* By default, elements with position: static (the default) don’t participate in the stacking context. position: relative — Makes the <span> participate in stacking */
+  z-index: 1; /* Stack it above the background layer */
+}
+
+
+@media(max-width: 390px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .score-total {
+    width: 100%;
+  }
+
+  .score-total .score-container {
+    width: 140px;
+    height: 140px;
+    padding: var(--spacing-150)
+  }
+
+  .score-total .score-container .score {
+    font: var(--text-preset-2);
+  }
+
+  .score-total .score-container .total {
+    font: var(--text-preset-6-bold);
+  }
+
+  .summary {
+    width: 100%;
+    row-gap: var(--spacing-200);
+  }
+}
